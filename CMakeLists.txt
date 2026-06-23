@@ -1,12 +1,12 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.15)
 project(eulerfoil C)
 
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# --- Complier options ---
-option(EULERFOIL_WERROR "Treat warnigns as errors" ON)
+# --- Compiler options ---
+option(EULERFOIL_WERROR "Treat warnings as errors" ON)
 
 set(eulerfoil_warnings_gnu
     -Wall -Wextra -Wconversion
@@ -27,7 +27,7 @@ target_compile_options(eulerfoil_flags INTERFACE
     $<$<AND:$<BOOL:${EULERFOIL_WERROR}>,$<C_COMPILER_ID:GNU,Clang,AppleClang>>:-Werror>
     $<$<AND:$<BOOL:${EULERFOIL_WERROR}>,$<C_COMPILER_ID:MSVC>>:/WX>)
 
-# --- Score and testing ---
+# --- Source and testing ---
 enable_testing()
 add_subdirectory(src)
 add_subdirectory(tests)
