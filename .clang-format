@@ -1,0 +1,48 @@
+---
+# --- C, Allman braces, BARR-C-flavored ---
+BasedOnStyle: LLVM
+
+# --- Indentation ---
+UseTab: Never
+IndentWidth: 4
+TabWidth: 4
+ContinuationIndentWidth: 4
+
+# --- Width ---
+ColumnLimit: 80
+
+# --- Braces ---
+BreakBeforeBraces: Allman
+InsertBraces: true
+
+# --- Pointer ---
+PointerAlignment: Right
+DerivePointerAlignment: false
+
+# --- One-liner ---
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortEnumsOnASingleLine: false
+
+# --- Includes ---
+SortIncludes: CaseSensitive
+IncludeBlocks: Regroup
+IncludeCategories:
+    - Regex:    '^"'    # project headers
+      Priority: 1
+    - Regex:    '^<'    # system /library headers
+      Priority: 2
+
+# --- Spacing ---
+SpaceBeforeParens: ControlStatements    # if (...); func(...)
+SpaceAfterCStyleCast: true              # (int) x
+
+# --- Alignment ---
+AlignConsecutiveAssignments: Consecutive
+AlignConsecutiveDeclarations: Consecutive
+
+# --- Empty Lines ---
+MaxEmptyLinesToKeep: 1
+SeparateDefinitionBlocks: Always

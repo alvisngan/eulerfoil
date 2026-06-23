@@ -1,0 +1,39 @@
+---
+Checks: >
+  -*,
+  cert-*,
+  clang-analyzer-*,
+  bugprone-*,
+  concurrency-*,
+  misc-include-cleaner,
+  llvm-header-guard,
+  readability-isolate-declaration,
+  readability-identifier-naming,
+  readability-magic-numbers,
+  readability-function-size,
+  readability-function-cognitive-complexity,
+  cppcoreguidelines-avoid-non-const-global-variables,
+  -bugprone-easily-swappable-parameters
+
+# -bugprone-easily-swappable-parameters: allow foo(float a, float b)
+
+HeaderFilterRegex: '(src|include)/.*'   # check project headers
+WarningsAsErrors: ''                    # warnings only
+FormatStyle: file                       # use the closest .clang-format
+
+CheckOptions:
+  # --- Naming Conventions ---
+  readability-identifier-naming.FunctionCase:        lower_case
+  readability-identifier-naming.VariableCase:        lower_case
+  readability-identifier-naming.ParameterCase:       lower_case
+  readability-identifier-naming.StructCase:          CamelCase    # PascalCase
+  readability-identifier-naming.UnionCase:           CamelCase
+  readability-identifier-naming.EnumCase:            CamelCase
+  readability-identifier-naming.TypedefCase:         CamelCase
+  readability-identifier-naming.EnumConstantCase:    UPPER_CASE
+  readability-identifier-naming.MacroDefinitionCase: UPPER_CASE
+  readability-identifier-naming.GlobalConstantCase:  UPPER_CASE
+
+  # --- Size Limit ---
+  readability-function-size.LineThreshold:             65
+  readability-function-cognitive-complexity.Threshold: 30

@@ -1,0 +1,9 @@
+* text=auto eol=lf
+
+# Windows
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+*.c diff=cpp
+*.h diff=cpp
+*.h linguist-language=C
