@@ -50,25 +50,25 @@ static inline simd_f64_t simd_div_f64(simd_f64_t num, simd_f64_t den)
 static inline simd_f64_t simd_mul_add_f64(simd_f64_t mul_a, simd_f64_t mul_b,
                                           simd_f64_t add)
 {
-    return mul_a * mul_b + add;
+    return fma(mul_a, mul_b, add);
 }
 
 static inline simd_f64_t simd_neg_mul_add_f64(simd_f64_t mul_a,
                                               simd_f64_t mul_b, simd_f64_t add)
 {
-    return add - mul_a * mul_b;
+    return fma(-mul_a, mul_b, add);
 }
 
 static inline simd_f64_t simd_mul_sub_f64(simd_f64_t mul_a, simd_f64_t mul_b,
                                           simd_f64_t sub)
 {
-    return mul_a * mul_b - sub;
+    return fma(mul_a, mul_b, -sub);
 }
 
 static inline simd_f64_t simd_neg_mul_sub_f64(simd_f64_t mul_a,
                                               simd_f64_t mul_b, simd_f64_t sub)
 {
-    return -(mul_a * mul_b) - sub;
+    return fma(-mul_a, mul_b, -sub);
 }
 
 static inline simd_f64_t simd_sqrt_f64(simd_f64_t x)
