@@ -2,6 +2,11 @@
 typedef double simd_f64_t;
 #define SIMD_WIDTH 1
 
+static inline simd_f64_t simd_set1_f64(double x)
+{
+    return x;
+}
+
 static inline simd_f64_t simd_load_f64(const double *p)
 {
     return *p;
@@ -20,11 +25,6 @@ static inline void simd_store_f64(double *restrict p, simd_t simd_vec)
 static inline void simd_store_aligned_f64(double *restrict p, simd_t simd_vec)
 {
     *p = simd_vec;
-}
-
-static inline simd_f64_t simd_set1_f64(double x)
-{
-    return x;
 }
 
 static inline simd_f64_t simd_add_f64(simd_f64_t a, simd_f64_t b)
