@@ -53,7 +53,7 @@ static inline void fill_random_bounded_f64(double *buf, size_t n,
  * The C standard only guarantees 15 bits (RAND_BITS) per call, so several
  * draws are packed together to form a 64-bit pseudo-random number.
  *
- * @return A 64-bit value with all bits pseudo-randomly set.
+ * @return A 64-bit value with the bits pseudo-randomly set.
  */
 static inline uint64_t rand_bits_64(void)
 {
