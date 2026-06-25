@@ -1,0 +1,97 @@
+#include <stdint.h>
+#include <stdlib.h>
+
+/* --- Definitions --- */
+
+/**
+ * @def RAND_BITS
+ * @brief Minimum usable pseudo-random bits in rand() call.
+ *
+ * C Standard guarantees minimum RAND_MAX to be at least 32767, which has
+ * 15-bit.
+ */
+#define RAND_BITS 15u
+
+/**
+ * @def F64_BITS
+ * @brief Number of bits in a double (f64).
+ */
+#define F64_BITS 64u
+
+/* --- Prototypes --- */
+
+/**
+ * @brief Generate an array of unbounded pseudo-random f64 (double) numbers.
+ *
+ * @param[out]  buf             Array destination; must hold n elements.
+ * @param[in]   n               Number of elements.
+ * @param[in]   seed            Pseudo-random number generator seed.
+ */
+static inline void fill_random_f64(double *buf, size_t n, uint32_t seed);
+
+/**
+ * @brief Generate an array of bounded pseudo-random doubles.
+ *
+ * Each element is drawn uniformly from half-open interval
+ * [lower_bound, upper_bound).
+ *
+ * @param[out]  buf             Array destination; must hold n elements.
+ * @param[in]   n               Number of elements.
+ * @param[in]   upper_bound     Upper bound; exclusive.
+ * @param[in]   lower_bound     Lower bound; inclusive.
+ * @param[in]   seed            Pseudo-random number generator seed.
+ */
+static inline void fill_random_bounded_f64(double *buf, size_t n,
+                                           double upper_bound,
+                                           double lower_bound, uint32_t seed);
+
+/* --- Implementations --- */
+
+/**
+ * @brief Generate 64 pseudo-random bits.
+ *
+ * The C standard only guarantees 15 bits (RAND_BITS) per call, so several
+ * draws are packed together to form a 64-bit pseudo-random number.
+ *
+ * @return A 64-bit value with all bits pseudo-randomly set.
+ */
+static inline uint64_t rand_bits_64(void)
+{
+    uint64_t       bits         = 0;
+    const uint64_t rand_bitmask = ((1u << RNG_BITS) - 1u); /* 15 set bits */
+
+    for (uint32_t i = 0; i < F64_BITS; i += RAND_BITS)
+    {
+        bits <<= RAND_BITS;
+        bits |= (uint64_t) rand() & rand_bitmask;
+    }
+
+    return bits;
+}
+
+static inline void fill_random_f64(double *buf, size_t n, uint32_t seed)
+{
+    srand(seed);
+    for (size_t i = 0; i < n; ++i)
+    {
+        double   d;
+        uint64_t u = rand_bits_64();
+        memcpy(&d, &u, sizeof(d));
+        buf[i] = d;
+    }
+}
+
+static inline void fill_random_bounded_f64(double *buf, size_t n,
+                                           double upper_bound,
+                                           double lower_bound, uint32_t seed)
+{
+    srand(seed);
+    const double range = upper_bound - lower_bound;
+    for (size_t i = 0; i < n; ++i)
+    {
+        /* convert int [0, RAND_MAX] to double [0, 1)               */
+        /* + 1.0 on the denominator to force exlusive upper bound   */
+        double foo = (double) rand() / ((double) RAND_MAX + 1.0);
+        buf[i]     = lower_bound + range * foo;
+    }
+}
