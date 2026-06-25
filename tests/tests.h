@@ -61,7 +61,7 @@ static inline uint64_t rand_bits_64(void)
     /* bit mask with RAND_BITS set bits on the right */
     const uint64_t rand_bitmask = ((uint64_t)1u << RAND_BITS) - 1u;
 
-    for (uint32_t i = 0; i < F64_BITS; i += RAND_BITS)
+    for (unsigned int i = 0; i < F64_BITS; i += RAND_BITS)
     {
         bits <<= RAND_BITS;
         bits |= (uint64_t) rand() & rand_bitmask;
