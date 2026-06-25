@@ -57,9 +57,9 @@ static inline void fill_random_bounded_f64(double *buf, size_t n,
  */
 static inline uint64_t rand_bits_64(void)
 {
-    uint64_t       bits         = 0;
+    uint64_t bits = 0;
     /* bit mask with RAND_BITS set bits on the right */
-    const uint64_t rand_bitmask = ((uint64_t)1u << RAND_BITS) - 1u;
+    const uint64_t rand_bitmask = ((uint64_t) 1u << RAND_BITS) - 1u;
 
     for (unsigned int i = 0; i < F64_BITS; i += RAND_BITS)
     {
