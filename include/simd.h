@@ -22,7 +22,8 @@ static inline void simd_store_f64(double *restrict p, EF_SimdF64 simd_vec)
     *p = simd_vec;
 }
 
-static inline void simd_store_aligned_f64(double *restrict p, EF_SimdF64 simd_vec)
+static inline void simd_store_aligned_f64(double *restrict p,
+                                          EF_SimdF64 simd_vec)
 {
     *p = simd_vec;
 }
