@@ -1,6 +1,6 @@
 #include <math.h>
 typedef double simd_f64_t;
-#define SIMD_WIDTH 1
+#define EF_SIMD_WIDTH 1
 
 static inline simd_f64_t simd_set1_f64(double x)
 {
