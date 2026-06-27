@@ -42,8 +42,9 @@ static inline void ef_fill_random_f64(double *buf, size_t n, uint32_t seed);
  * @param[in]   seed            Pseudo-random number generator seed.
  */
 static inline void ef_fill_random_bounded_f64(double *buf, size_t n,
-                                           double upper_bound,
-                                           double lower_bound, uint32_t seed);
+                                              double   upper_bound,
+                                              double   lower_bound,
+                                              uint32_t seed);
 
 /* --- Implementations --- */
 
@@ -83,8 +84,8 @@ static inline void ef_fill_random_f64(double *buf, size_t n, uint32_t seed)
 }
 
 static inline void ef_fill_random_bounded_f64(double *buf, size_t n,
-                                           double upper_bound,
-                                           double lower_bound, uint32_t seed)
+                                              double upper_bound,
+                                              double lower_bound, uint32_t seed)
 {
     srand(seed);
     const double range = upper_bound - lower_bound;
