@@ -25,41 +25,41 @@ CheckOptions:
   # --- Naming Conventions ---
   # lower_case for variables, parameters, and internal (static) functions
   # no prefix
-  readability-identifier-naming.FunctionCase:        lower_case
-  readability-identifier-naming.VariableCase:        lower_case
-  readability-identifier-naming.ParameterCase:       lower_case
+  readability-identifier-naming.FunctionCase:           lower_case
+  readability-identifier-naming.VariableCase:           lower_case
+  readability-identifier-naming.ParameterCase:          lower_case
 
   # PascalCase for struct, union, enum, and typedef
   # with EF_ prefix (abbr. EulerFoil)
-  readability-identifier-naming.StructCase:          CamelCase
-  readability-identifier-naming.StructPrefix:        'EF_'
+  readability-identifier-naming.StructCase:             CamelCase
+  readability-identifier-naming.StructPrefix:           'EF_'
 
-  readability-identifier-naming.UnionCase:           CamelCase
-  readability-identifier-naming.UnionPrefix:         'EF_'
+  readability-identifier-naming.UnionCase:              CamelCase
+  readability-identifier-naming.UnionPrefix:            'EF_'
 
-  readability-identifier-naming.EnumCase:            CamelCase
-  readability-identifier-naming.EnumPrefix:          'EF_'
+  readability-identifier-naming.EnumCase:               CamelCase
+  readability-identifier-naming.EnumPrefix:             'EF_'
 
-  readability-identifier-naming.TypedefCase:         CamelCase
-  readability-identifier-naming.TypedefPrefix:       'EF_'
+  readability-identifier-naming.TypedefCase:            CamelCase
+  readability-identifier-naming.TypedefPrefix:          'EF_'
 
   # UPPER_CASE for enum constant, global constant
   # with EF_ prefix (abbr. EulerFoil)
-  readability-identifier-naming.EnumConstantCase:    UPPER_CASE
-  readability-identifier-naming.EnumConstantPrefix:  'EF_'
+  readability-identifier-naming.EnumConstantCase:       UPPER_CASE
+  readability-identifier-naming.EnumConstantPrefix:     'EF_'
 
-  readability-identifier-naming.GlobalConstantCase:  UPPER_CASE
-  readability-identifier-naming.GlobalConstantPrefix:  'EF_'
+  readability-identifier-naming.GlobalConstantCase:     UPPER_CASE
+  readability-identifier-naming.GlobalConstantPrefix:   'EF_'
 
   # UPPER_CASE for Macro
-  # no prefix enforcement with since it will conflict with header guard
-  readability-identifier-naming.MacroDefinitionCase: UPPER_CASE
+  # no prefix enforcement with since it will conflict   with header guard
+  readability-identifier-naming.MacroDefinitionCase:    UPPER_CASE
 
   # lower_case for public (non-static) functions
   # with ef_ prefix (abbr. EulerFoil)
-  readability-identifier-naming.GlobalFunctionCase:  lower_case
-  readability-identifier-naming.GlobalFunctionPrefix: 'ef_'
+  readability-identifier-naming.GlobalFunctionCase:     lower_case
+  readability-identifier-naming.GlobalFunctionPrefix:   'ef_'
 
   # --- Size Limit ---
-  readability-function-size.LineThreshold:             65
-  readability-function-cognitive-complexity.Threshold: 30
+  readability-function-size.LineThreshold:              65
+  readability-function-cognitive-complexity.Threshold:  30
