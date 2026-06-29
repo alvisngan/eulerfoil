@@ -1,6 +1,7 @@
 #include <math.h>
 typedef double EF_SimdF64;
 #define EF_SIMD_WIDTH 1
+#define EF_SIMD_ALIGNMENT 8
 
 static inline EF_SimdF64 simd_set1_f64(double x)
 {
