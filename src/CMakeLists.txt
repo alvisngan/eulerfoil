@@ -1,8 +1,12 @@
-add_library(eulerfoil STATIC
-    state.c)
+# TODO: when the src/ is populated with .c files
+#   - change add_library() keyword to STATIC
+#   - change target_include_directories keyword to PUBLIC
+#   - change target_link_libraries keyword to PRIVATE
 
-target_include_directories(eulerfoil PUBLIC ${PROJECT_SOURCE_DIR}/include)
-target_link_libraries(eulerfoil PRIVATE eulerfoil_flags)
+add_library(eulerfoil INTERFACE)
 
-add_executable(eulerfoil_app main.c)
-target_link_libraries(eulerfoil_app PRIVATE eulerfoil eulerfoil_flags)
+target_include_directories(eulerfoil INTERFACE ${PROJECT_SOURCE_DIR}/include)
+target_link_libraries(eulerfoil INTERFACE eulerfoil_flags)
+
+#add_executable(eulerfoil_app main.c)
+#target_link_libraries(eulerfoil_app PRIVATE eulerfoil eulerfoil_flags)
