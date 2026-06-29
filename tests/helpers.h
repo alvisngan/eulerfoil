@@ -9,7 +9,7 @@
  * @param[in]   n               Number of elements.
  * @param[in]   seed            Pseudo-random number generator seed.
  */
-static inline void ef_fill_random_f64(double *buf, size_t n, uint32_t seed);
+void ef_fill_random_f64(double *buf, size_t n, uint32_t seed);
 
 /**
  * @brief Generate an array of bounded pseudo-random doubles.
@@ -23,7 +23,7 @@ static inline void ef_fill_random_f64(double *buf, size_t n, uint32_t seed);
  * @param[in]   lower_bound     Lower bound; inclusive.
  * @param[in]   seed            Pseudo-random number generator seed.
  */
-static inline void ef_fill_random_bounded_f64(double *buf, size_t n,
+void ef_fill_random_bounded_f64(double *buf, size_t n,
                                               double   upper_bound,
                                               double   lower_bound,
                                               uint32_t seed);
