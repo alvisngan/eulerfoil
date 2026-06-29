@@ -23,18 +23,19 @@ eulerfoil
     validation.md
     testing.md
   include/
-    types.h
-    config.h
-    simd.h
+    eulerfoil/
+      types.h
+      config.h
+      simd.h
 
-    layout.h                    # cell indexing, padding, stride size
+      layout.h                  # cell indexing, padding, stride size
 
-    mesh.h                      # mesh struct (arena allocation, geometry)
-    state.h                     # solution fields and arena allocation
-    init.h                      # initial conditions
+      mesh.h                    # mesh struct (arena allocation, geometry)
+      state.h                   # solution fields and arena allocation
+      init.h                    # initial conditions
 
-    solver.h                    # advance one timestep
-    io.h                        # mesh load, output, coefficients
+      solver.h                  # advance one timestep
+      io.h                      # mesh load, output, coefficients
 
     kernels/
       kernels.h                 # umbrella include
