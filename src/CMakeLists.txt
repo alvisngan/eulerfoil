@@ -7,6 +7,9 @@ add_library(eulerfoil INTERFACE)
 
 target_include_directories(eulerfoil INTERFACE ${PROJECT_SOURCE_DIR}/include)
 target_link_libraries(eulerfoil INTERFACE eulerfoil_flags)
+if (NOT MSVC)
+    target_link_libraries(eulerfoil INTERFACE m)
+endif()
 
 #add_executable(eulerfoil_app main.c)
 #target_link_libraries(eulerfoil_app PRIVATE eulerfoil eulerfoil_flags)
