@@ -37,13 +37,13 @@ void tearDown(void)
 {
 }
 
-void test_simd_set1_f64(void)
+void test_ef_simd_set1_f64(void)
 {
     for (unsigned int i = 0; i < N_TEST_ARRAY; ++i)
     {
         EF_ALIGNAS(EF_SIMD_ALIGNMENT) double actual[EF_SIMD_WIDTH];
-        EF_SimdF64 vec = simd_set1_f64(test_array_f64[i]);
-        simd_store_aligned_f64(actual, vec);
+        EF_SimdF64 vec = ef_simd_set1_f64(test_array_f64[i]);
+        ef_simd_store_aligned_f64(actual, vec);
         for (unsigned int j = 0; j < EF_SIMD_WIDTH; ++j)
         {
             /* no arithmetics -> should be bitwise identical */
@@ -56,7 +56,7 @@ void test_simd_set1_f64(void)
 int main(void)
 {
     UNITY_BEGIN();
-    RUN_TEST(test_simd_set1_f64);
+    RUN_TEST(test_ef_simd_set1_f64);
 
     return UNITY_END();
 }
