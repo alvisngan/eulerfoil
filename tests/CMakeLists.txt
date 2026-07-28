@@ -22,3 +22,4 @@ endfunction()
 
 # --- Add tests ---
 add_unity_test(test_simd)
+add_unity_test(test_compat)
