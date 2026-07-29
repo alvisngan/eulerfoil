@@ -5,7 +5,6 @@ Checks: >
   clang-analyzer-*,
   bugprone-*,
   concurrency-*,
-  misc-include-cleaner,
   llvm-header-guard,
   readability-isolate-declaration,
   readability-identifier-naming,
@@ -17,6 +16,9 @@ Checks: >
   -bugprone-easily-swappable-parameters
 
 # -bugprone-easily-swappable-parameters: allow foo(float a, float b)
+#  misc-include-cleaner:  dropped
+#                           - it adds unnecessary #include for internal headers
+#                             (e.g. simd.h -> simd/scalar.h)
 
 HeaderFilterRegex: '(src|include)/.*'   # check project headers
 WarningsAsErrors: ''                    # warnings only
