@@ -1,4 +1,17 @@
 ---
 InheritParentConfig: true
+Checks: >
+  -readability-magic-numbers,
+  -readability-function-cognitive-complexity,
+  -cert-msc30-c,
+  -cert-msc50-cpp,
+  -concurrency-mt-unsafe
+
+# -readability-function-cognitive-complexity is for disabling Unity MARCO
+# warnings
+
+# -cert-msc30-c, -cert-msc50-cpp, -concurrency-mt-unsafe are for disabling
+# rand() related warning messages
+
 CheckOptions:
   readability-identifier-naming.GlobalFunctionPrefix: ''
