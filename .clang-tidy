@@ -63,6 +63,9 @@ CheckOptions:
   readability-identifier-naming.GlobalFunctionCase:     lower_case
   readability-identifier-naming.GlobalFunctionPrefix:   'ef_'
 
+  # 1024U marco warnings
+  readability-uppercase-literal-suffix.IgnoreMacros:    false
+
   # --- Size Limit ---
   readability-function-size.LineThreshold:              65
   readability-function-cognitive-complexity.Threshold:  30
