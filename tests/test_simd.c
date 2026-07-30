@@ -23,9 +23,10 @@
 #define N_SIMD_VEC 1024U
 
 /* number of elements (doubles) in the test array */
-#define N_TEST_ARRAY (N_SIMD_VEC * EF_SIMD_WIDTH)
+#define N_TEST_ARRAY ((size_t) N_SIMD_VEC * EF_SIMD_WIDTH)
 
 /* test cases */
+/* NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables) */
 static EF_ALIGNAS(EF_SIMD_ALIGNMENT) double test_array_f64[N_TEST_ARRAY];
 
 /* NOLINTNEXTLINE(readability-identifier-naming) */
