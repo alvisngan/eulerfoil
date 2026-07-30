@@ -1,6 +1,9 @@
 #ifndef EULERFOIL_SIMD_SCALAR_H
 #define EULERFOIL_SIMD_SCALAR_H
 
+#include "eulerfoil/compat.h"
+
+#include <assert.h>
 #include <math.h>
 typedef double EF_SimdF64;
 #define EF_SIMD_WIDTH 1
@@ -18,6 +21,8 @@ static inline EF_SimdF64 ef_simd_load_f64(const double *p)
 
 static inline EF_SimdF64 ef_simd_load_aligned_f64(const double *p)
 {
+    assert(ef_is_aligned(p, EF_SIMD_ALIGNMENT)
+           && "pointer must be SIMD-aligned");
     return *p;
 }
 
@@ -29,6 +34,8 @@ static inline void ef_simd_store_f64(double *restrict p, EF_SimdF64 simd_vec)
 static inline void ef_simd_store_aligned_f64(double *restrict p,
                                           EF_SimdF64 simd_vec)
 {
+    assert(ef_is_aligned(p, EF_SIMD_ALIGNMENT)
+           && "pointer must be SIMD-aligned");
     *p = simd_vec;
 }
 
