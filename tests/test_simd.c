@@ -40,6 +40,32 @@ void tearDown(void)
 {
 }
 
+void test_ef_simd_load_store_f64(void)
+{
+    for (size_t i = 0; i < N_TEST_ARRAY; i += EF_SIMD_WIDTH)
+    {
+        double actual[EF_SIMD_WIDTH];
+        EF_SimdF64 vec = ef_simd_load_f64(&test_array_f64[i]);
+        ef_simd_store_f64(actual, vec);
+
+        /* no arithmetics -> should be bitwise identical */
+        TEST_ASSERT_EQUAL_MEMORY(&test_array_f64[i], actual, EF_SIMD_WIDTH);
+    }
+}
+
+void test_ef_simd_load_store_aligned_f64(void)
+{
+    for (size_t i = 0; i < N_TEST_ARRAY; i += EF_SIMD_WIDTH)
+    {
+        EF_ALIGNAS(EF_SIMD_ALIGNMENT) double actual[EF_SIMD_WIDTH];
+        EF_SimdF64 vec = ef_simd_load_aligned_f64(&test_array_f64[i]);
+        ef_simd_store_aligned_f64(actual, vec);
+
+        /* no arithmetics -> should be bitwise identical */
+        TEST_ASSERT_EQUAL_MEMORY(&test_array_f64[i], actual, EF_SIMD_WIDTH);
+    }
+}
+
 void test_ef_simd_set1_f64(void)
 {
     for (unsigned int i = 0; i < N_TEST_ARRAY; ++i)
@@ -59,6 +85,8 @@ void test_ef_simd_set1_f64(void)
 int main(void)
 {
     UNITY_BEGIN();
+    RUN_TEST(test_ef_simd_load_store_f64);
+    RUN_TEST(test_ef_simd_load_store_aligned_f64);
     RUN_TEST(test_ef_simd_set1_f64);
 
     return UNITY_END();
