@@ -17,10 +17,10 @@
  */
 
 /* random seed */
-#define RAND_SEED 42u
+#define RAND_SEED 42U
 
 /* number of SIMD vectors the test case array can hold. */
-#define N_SIMD_VEC 1024u
+#define N_SIMD_VEC 1024U
 
 /* number of elements (doubles) in the test array */
 #define N_TEST_ARRAY (N_SIMD_VEC * EF_SIMD_WIDTH)

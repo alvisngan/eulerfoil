@@ -39,9 +39,9 @@
  */
 static inline bool ef_is_aligned(const void *p, size_t n)
 {
-    assert((n != 0u) && "alignment must be nonzero");
-    assert(((n & (n - 1u)) == 0u) && "alignment must be power of two");
-    return ((uintptr_t)p & (n - 1u)) == 0u;
+    assert((n != 0U) && "alignment must be nonzero");
+    assert(((n & (n - 1U)) == 0U) && "alignment must be power of two");
+    return ((uintptr_t) p & (n - 1U)) == 0U;
 }
 
 #endif

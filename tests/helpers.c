@@ -11,13 +11,13 @@
  * C Standard guarantees minimum RAND_MAX to be at least 32767, which has
  * 15-bit.
  */
-#define RAND_BITS 15u
+#define RAND_BITS 15U
 
 /**
  * @def F64_BITS
  * @brief Number of bits in a double (f64).
  */
-#define F64_BITS 64u
+#define F64_BITS 64U
 
 
 /* --- Implementations --- */
@@ -34,7 +34,7 @@ static inline uint64_t rand_bits_64(void)
 {
     uint64_t bits = 0;
     /* bit mask with RAND_BITS set bits on the right */
-    const uint64_t rand_bitmask = ((uint64_t) 1u << RAND_BITS) - 1u;
+    const uint64_t rand_bitmask = ((uint64_t) 1U << RAND_BITS) - 1U;
 
     for (unsigned int i = 0; i < F64_BITS; i += RAND_BITS)
     {
