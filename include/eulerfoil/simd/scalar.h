@@ -1,3 +1,6 @@
+#ifndef EULERFOIL_SIMD_SCALAR_H
+#define EULERFOIL_SIMD_SCALAR_H
+
 #include <math.h>
 typedef double EF_SimdF64;
 #define EF_SIMD_WIDTH 1
@@ -92,3 +95,5 @@ static inline EF_SimdF64 ef_simd_min_f64(EF_SimdF64 a, EF_SimdF64 b)
 {
     return fmin(a, b);
 }
+
+#endif

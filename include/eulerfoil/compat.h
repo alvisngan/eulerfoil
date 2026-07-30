@@ -1,3 +1,6 @@
+#ifndef EULERFOIL_COMPAT_H
+#define EULERFOIL_COMPAT_H
+
 #include <assert.h>
 #include <stdint.h>
 #include <stdbool.h>
@@ -40,3 +43,5 @@ static inline bool ef_is_aligned(const void *p, size_t n)
     assert(((n & (n - 1u)) == 0u) && "alignment must be power of two");
     return ((uintptr_t)p & (n - 1u)) == 0u;
 }
+
+#endif
