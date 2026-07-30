@@ -9,10 +9,12 @@
 
 #define ARR_SIZE 128U
 
+/* NOLINTNEXTLINE(readability-identifier-naming) */
 void setUp(void)
 {
 }
 
+/* NOLINTNEXTLINE(readability-identifier-naming) */
 void tearDown(void)
 {
 }

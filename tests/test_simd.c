@@ -28,11 +28,13 @@
 /* test cases */
 static EF_ALIGNAS(EF_SIMD_ALIGNMENT) double test_array_f64[N_TEST_ARRAY];
 
+/* NOLINTNEXTLINE(readability-identifier-naming) */
 void setUp(void)
 {
     ef_fill_random_f64(test_array_f64, N_TEST_ARRAY, RAND_SEED);
 }
 
+/* NOLINTNEXTLINE(readability-identifier-naming) */
 void tearDown(void)
 {
 }
