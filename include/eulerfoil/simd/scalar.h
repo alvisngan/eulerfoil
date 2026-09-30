@@ -4,8 +4,10 @@
 #include "eulerfoil/compat.h"
 
 #include <assert.h>
+#include <stdint.h>
 #include <math.h>
 typedef double EF_SimdF64;
+typedef uint64_t EF_SimdMask64;
 #define EF_SIMD_WIDTH 1
 #define EF_SIMD_ALIGNMENT 8
 
@@ -37,6 +39,12 @@ static inline void ef_simd_store_aligned_f64(double *restrict p,
     assert(ef_is_aligned(p, EF_SIMD_ALIGNMENT)
            && "pointer must be SIMD-aligned");
     *p = simd_vec;
+}
+
+static inline void ef_simd_store_mask64(uint64_t *restrict p,
+                                        EF_SimdMask64 mask)
+{
+    *p = mask;
 }
 
 static inline EF_SimdF64 ef_simd_add_f64(EF_SimdF64 a, EF_SimdF64 b)
@@ -106,6 +114,30 @@ static inline EF_SimdF64 ef_simd_min_f64(EF_SimdF64 a, EF_SimdF64 b)
 static inline EF_SimdF64 ef_simd_neg_f64(EF_SimdF64 x)
 {
     return -x;
+}
+
+static inline EF_SimdMask64 ef_simd_compare_greater_f64(EF_SimdF64 a,
+                                                     EF_SimdF64 b)
+{
+    return (a > b) ? UINT64_MAX : 0U;
+}
+
+static inline EF_SimdMask64 ef_simd_compare_less_f64(EF_SimdF64 a,
+                                                  EF_SimdF64 b)
+{
+    return (a < b) ? UINT64_MAX : 0U;
+}
+
+static inline EF_SimdMask64 ef_simd_compare_greater_equal_f64(EF_SimdF64 a,
+                                                           EF_SimdF64 b)
+{
+    return (a >= b) ? UINT64_MAX : 0U;
+}
+
+static inline EF_SimdMask64 ef_simd_compare_less_equal_f64(EF_SimdF64 a,
+                                                        EF_SimdF64 b)
+{
+    return (a <= b) ? UINT64_MAX : 0U;
 }
 
 #endif
