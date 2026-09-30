@@ -4,7 +4,6 @@
 
 #include <unity.h>
 
-#include <stdio.h>
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -339,7 +338,6 @@ void test_ef_simd_compare_greater_f64(void)
 
         for (unsigned int j = 0; j < EF_SIMD_WIDTH; ++j)
         {
-            /* correctly-rounded op -> should be bit-identical to math.h */
             uint64_t expected = (test_array_a_f64[i + j] >
                                  test_array_b_f64[i + j]) ? UINT64_MAX : 0U;
 
@@ -360,7 +358,6 @@ void test_ef_simd_compare_less_f64(void)
 
         for (unsigned int j = 0; j < EF_SIMD_WIDTH; ++j)
         {
-            /* correctly-rounded op -> should be bit-identical to math.h */
             uint64_t expected = (test_array_a_f64[i + j] <
                                  test_array_b_f64[i + j]) ? UINT64_MAX : 0U;
 
@@ -382,7 +379,6 @@ void test_ef_simd_compare_greater_equal_f64(void)
 
         for (unsigned int j = 0; j < EF_SIMD_WIDTH; ++j)
         {
-            /* correctly-rounded op -> should be bit-identical to math.h */
             uint64_t expected = (test_array_a_f64[i + j] >=
                                  test_array_b_f64[i + j]) ? UINT64_MAX : 0U;
 
@@ -404,7 +400,6 @@ void test_ef_simd_compare_less_equal_f64(void)
 
         for (unsigned int j = 0; j < EF_SIMD_WIDTH; ++j)
         {
-            /* correctly-rounded op -> should be bit-identical to math.h */
             uint64_t expected = (test_array_a_f64[i + j] <=
                                  test_array_b_f64[i + j]) ? UINT64_MAX : 0U;
 
