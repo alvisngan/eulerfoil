@@ -163,6 +163,72 @@ void test_ef_simd_div_f64(void)
     }
 }
 
+void test_ef_simd_mul_add_f64(void)
+{
+    for (unsigned int i = 0; i < N_TEST_ARRAY; i += EF_SIMD_WIDTH)
+    {
+        double actual[EF_SIMD_WIDTH];
+        EF_SimdF64 vec_a = ef_simd_load_f64(&test_array_a_f64[i]);
+        EF_SimdF64 vec_b = ef_simd_load_f64(&test_array_b_f64[i]);
+        EF_SimdF64 vec_c = ef_simd_load_f64(&test_array_c_f64[i]);
+        EF_SimdF64 vec_actual = ef_simd_mul_add_f64(vec_a, vec_b, vec_c);
+        ef_simd_store_f64(actual, vec_actual);
+
+        for (unsigned int j = 0; j < EF_SIMD_WIDTH; ++j)
+        {
+            /* correctly-rounded op -> should be bit-identical to math.h */
+            double expected = fma(test_array_a_f64[i + j],
+                                  test_array_b_f64[i + j],
+                                  test_array_c_f64[i + j]);
+            TEST_ASSERT_EQUAL_MEMORY(&expected, &actual[j], sizeof(double));
+        }
+    }
+}
+
+void test_ef_simd_neg_mul_add_f64(void)
+{
+    for (unsigned int i = 0; i < N_TEST_ARRAY; i += EF_SIMD_WIDTH)
+    {
+        double actual[EF_SIMD_WIDTH];
+        EF_SimdF64 vec_a = ef_simd_load_f64(&test_array_a_f64[i]);
+        EF_SimdF64 vec_b = ef_simd_load_f64(&test_array_b_f64[i]);
+        EF_SimdF64 vec_c = ef_simd_load_f64(&test_array_c_f64[i]);
+        EF_SimdF64 vec_actual = ef_simd_neg_mul_add_f64(vec_a, vec_b, vec_c);
+        ef_simd_store_f64(actual, vec_actual);
+
+        for (unsigned int j = 0; j < EF_SIMD_WIDTH; ++j)
+        {
+            /* correctly-rounded op -> should be bit-identical to math.h */
+            double expected = fma(-test_array_a_f64[i + j],
+                                  test_array_b_f64[i + j],
+                                  test_array_c_f64[i + j]);
+            TEST_ASSERT_EQUAL_MEMORY(&expected, &actual[j], sizeof(double));
+        }
+    }
+}
+
+void test_ef_simd_mul_sub_f64(void)
+{
+    for (unsigned int i = 0; i < N_TEST_ARRAY; i += EF_SIMD_WIDTH)
+    {
+        double actual[EF_SIMD_WIDTH];
+        EF_SimdF64 vec_a = ef_simd_load_f64(&test_array_a_f64[i]);
+        EF_SimdF64 vec_b = ef_simd_load_f64(&test_array_b_f64[i]);
+        EF_SimdF64 vec_c = ef_simd_load_f64(&test_array_c_f64[i]);
+        EF_SimdF64 vec_actual = ef_simd_mul_sub_f64(vec_a, vec_b, vec_c);
+        ef_simd_store_f64(actual, vec_actual);
+
+        for (unsigned int j = 0; j < EF_SIMD_WIDTH; ++j)
+        {
+            /* correctly-rounded op -> should be bit-identical to math.h */
+            double expected = fma(test_array_a_f64[i + j],
+                                  test_array_b_f64[i + j],
+                                  -test_array_c_f64[i + j]);
+            TEST_ASSERT_EQUAL_MEMORY(&expected, &actual[j], sizeof(double));
+        }
+    }
+}
+
 int main(void)
 {
     UNITY_BEGIN();
@@ -173,6 +239,9 @@ int main(void)
     RUN_TEST(test_ef_simd_sub_f64);
     RUN_TEST(test_ef_simd_mul_f64);
     RUN_TEST(test_ef_simd_div_f64);
+    RUN_TEST(test_ef_simd_mul_add_f64);
+    RUN_TEST(test_ef_simd_neg_mul_add_f64);
+    RUN_TEST(test_ef_simd_mul_sub_f64);
 
     return UNITY_END();
 }
