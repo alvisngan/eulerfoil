@@ -4,6 +4,8 @@
 
 #include <unity.h>
 
+#include <stdio.h>
+
 /**
  * @file test_simd.c
  * @brief Unit tests for eulerfoil/simd.h functions.
@@ -323,6 +325,92 @@ void test_ef_simd_neg_f64(void)
     }
 }
 
+void test_ef_simd_compare_greater_f64(void)
+{
+    for (unsigned int i = 0; i < N_TEST_ARRAY; i += EF_SIMD_WIDTH)
+    {
+        uint64_t actual[EF_SIMD_WIDTH];
+        EF_SimdF64 vec_a = ef_simd_load_f64(&test_array_a_f64[i]);
+        EF_SimdF64 vec_b = ef_simd_load_f64(&test_array_b_f64[i]);
+        EF_SimdMask64 vec_actual = ef_simd_compare_greater_f64(vec_a, vec_b);
+        ef_simd_store_mask64(actual, vec_actual);
+
+        for (unsigned int j = 0; j < EF_SIMD_WIDTH; ++j)
+        {
+            /* correctly-rounded op -> should be bit-identical to math.h */
+            uint64_t expected = (test_array_a_f64[i + j] >
+                                 test_array_b_f64[i + j]) ? UINT64_MAX : 0U;
+
+            TEST_ASSERT_EQUAL_MEMORY(&expected, &actual[j], sizeof(double));
+        }
+    }
+}
+
+void test_ef_simd_compare_less_f64(void)
+{
+    for (unsigned int i = 0; i < N_TEST_ARRAY; i += EF_SIMD_WIDTH)
+    {
+        uint64_t actual[EF_SIMD_WIDTH];
+        EF_SimdF64 vec_a = ef_simd_load_f64(&test_array_a_f64[i]);
+        EF_SimdF64 vec_b = ef_simd_load_f64(&test_array_b_f64[i]);
+        EF_SimdMask64 vec_actual = ef_simd_compare_less_f64(vec_a, vec_b);
+        ef_simd_store_mask64(actual, vec_actual);
+
+        for (unsigned int j = 0; j < EF_SIMD_WIDTH; ++j)
+        {
+            /* correctly-rounded op -> should be bit-identical to math.h */
+            uint64_t expected = (test_array_a_f64[i + j] <
+                                 test_array_b_f64[i + j]) ? UINT64_MAX : 0U;
+
+            TEST_ASSERT_EQUAL_MEMORY(&expected, &actual[j], sizeof(double));
+        }
+    }
+}
+
+void test_ef_simd_compare_greater_equal_f64(void)
+{
+    for (unsigned int i = 0; i < N_TEST_ARRAY; i += EF_SIMD_WIDTH)
+    {
+        uint64_t actual[EF_SIMD_WIDTH];
+        EF_SimdF64 vec_a = ef_simd_load_f64(&test_array_a_f64[i]);
+        EF_SimdF64 vec_b = ef_simd_load_f64(&test_array_b_f64[i]);
+        EF_SimdMask64 vec_actual = ef_simd_compare_greater_equal_f64(vec_a,
+                                                                     vec_b);
+        ef_simd_store_mask64(actual, vec_actual);
+
+        for (unsigned int j = 0; j < EF_SIMD_WIDTH; ++j)
+        {
+            /* correctly-rounded op -> should be bit-identical to math.h */
+            uint64_t expected = (test_array_a_f64[i + j] >=
+                                 test_array_b_f64[i + j]) ? UINT64_MAX : 0U;
+
+            TEST_ASSERT_EQUAL_MEMORY(&expected, &actual[j], sizeof(double));
+        }
+    }
+}
+
+void test_ef_simd_compare_less_equal_f64(void)
+{
+    for (unsigned int i = 0; i < N_TEST_ARRAY; i += EF_SIMD_WIDTH)
+    {
+        uint64_t actual[EF_SIMD_WIDTH];
+        EF_SimdF64 vec_a = ef_simd_load_f64(&test_array_a_f64[i]);
+        EF_SimdF64 vec_b = ef_simd_load_f64(&test_array_b_f64[i]);
+        EF_SimdMask64 vec_actual = ef_simd_compare_less_equal_f64(vec_a,
+                                                                  vec_b);
+        ef_simd_store_mask64(actual, vec_actual);
+
+        for (unsigned int j = 0; j < EF_SIMD_WIDTH; ++j)
+        {
+            /* correctly-rounded op -> should be bit-identical to math.h */
+            uint64_t expected = (test_array_a_f64[i + j] <=
+                                 test_array_b_f64[i + j]) ? UINT64_MAX : 0U;
+
+            TEST_ASSERT_EQUAL_MEMORY(&expected, &actual[j], sizeof(double));
+        }
+    }
+}
+
 int main(void)
 {
     UNITY_BEGIN();
@@ -340,6 +428,10 @@ int main(void)
     RUN_TEST(test_ef_simd_abs_f64);
     RUN_TEST(test_ef_simd_max_f64);
     RUN_TEST(test_ef_simd_min_f64);
+    RUN_TEST(test_ef_simd_compare_greater_f64);
+    RUN_TEST(test_ef_simd_compare_less_f64);
+    RUN_TEST(test_ef_simd_compare_greater_equal_f64);
+    RUN_TEST(test_ef_simd_compare_less_equal_f64);
 
     return UNITY_END();
 }
