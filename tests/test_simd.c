@@ -229,6 +229,42 @@ void test_ef_simd_mul_sub_f64(void)
     }
 }
 
+void test_ef_simd_sqrt_f64(void)
+{
+    for (unsigned int i = 0; i < N_TEST_ARRAY; ++i)
+    {
+        EF_ALIGNAS(EF_SIMD_ALIGNMENT) double actual[EF_SIMD_WIDTH];
+        EF_SimdF64 vec = ef_simd_sqrt_f64(test_array_a_f64[i]);
+        ef_simd_store_aligned_f64(actual, vec);
+        for (unsigned int j = 0; j < EF_SIMD_WIDTH; ++j)
+        {
+            double expected = sqrt(test_array_a_f64[i+j]);
+
+            /* correctly-rounded op -> should be bit-identical to math.h */
+            TEST_ASSERT_EQUAL_MEMORY(&expected, &actual[j],
+                                     sizeof(double));
+        }
+    }
+}
+
+void test_ef_simd_abs_f64(void)
+{
+    for (unsigned int i = 0; i < N_TEST_ARRAY; ++i)
+    {
+        EF_ALIGNAS(EF_SIMD_ALIGNMENT) double actual[EF_SIMD_WIDTH];
+        EF_SimdF64 vec = ef_simd_abs_f64(test_array_a_f64[i]);
+        ef_simd_store_aligned_f64(actual, vec);
+        for (unsigned int j = 0; j < EF_SIMD_WIDTH; ++j)
+        {
+            double expected = fabs(test_array_a_f64[i+j]);
+
+            /* correctly-rounded op -> should be bit-identical to math.h */
+            TEST_ASSERT_EQUAL_MEMORY(&expected, &actual[j],
+                                     sizeof(double));
+        }
+    }
+}
+
 int main(void)
 {
     UNITY_BEGIN();
@@ -242,6 +278,8 @@ int main(void)
     RUN_TEST(test_ef_simd_mul_add_f64);
     RUN_TEST(test_ef_simd_neg_mul_add_f64);
     RUN_TEST(test_ef_simd_mul_sub_f64);
+    RUN_TEST(test_ef_simd_sqrt_f64);
+    RUN_TEST(test_ef_simd_abs_f64);
 
     return UNITY_END();
 }
