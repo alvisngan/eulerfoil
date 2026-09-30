@@ -103,4 +103,9 @@ static inline EF_SimdF64 ef_simd_min_f64(EF_SimdF64 a, EF_SimdF64 b)
     return fmin(a, b);
 }
 
+static inline EF_SimdF64 ef_simd_neg_f64(EF_SimdF64 x)
+{
+    return -x;
+}
+
 #endif
