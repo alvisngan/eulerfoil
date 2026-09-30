@@ -29,6 +29,7 @@
 /* NOLINTBEGIN(cppcoreguidelines-avoid-non-const-global-variables) */
 static EF_ALIGNAS(EF_SIMD_ALIGNMENT) double test_array_a_f64[N_TEST_ARRAY];
 static EF_ALIGNAS(EF_SIMD_ALIGNMENT) double test_array_b_f64[N_TEST_ARRAY];
+static EF_ALIGNAS(EF_SIMD_ALIGNMENT) double test_array_c_f64[N_TEST_ARRAY];
 /* NOLINTEND(cppcoreguidelines-avoid-non-const-global-variables) */
 
 /* NOLINTNEXTLINE(readability-identifier-naming) */
@@ -36,6 +37,7 @@ void setUp(void)
 {
     ef_fill_random_f64(test_array_a_f64, N_TEST_ARRAY, RAND_SEED);
     ef_fill_random_f64(test_array_b_f64, N_TEST_ARRAY, RAND_SEED);
+    ef_fill_random_f64(test_array_c_f64, N_TEST_ARRAY, RAND_SEED);
 }
 
 /* NOLINTNEXTLINE(readability-identifier-naming) */
