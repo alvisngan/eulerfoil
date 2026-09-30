@@ -4,6 +4,7 @@
 #include "eulerfoil/compat.h"
 
 #include <assert.h>
+#include <stdbool.h>
 #include <stdint.h>
 #include <math.h>
 typedef double EF_SimdF64;
@@ -138,6 +139,11 @@ static inline EF_SimdMask64 ef_simd_compare_less_equal_f64(EF_SimdF64 a,
                                                         EF_SimdF64 b)
 {
     return (a <= b) ? UINT64_MAX : 0U;
+}
+
+static inline bool ef_simd_all_true_mask64(EF_SimdMask64 mask)
+{
+    return mask == UINT64_MAX;
 }
 
 #endif
