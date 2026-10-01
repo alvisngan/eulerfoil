@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+    tags: ['v*']
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            cc: gcc
+          - os: ubuntu-latest
+            cc: clang
+          - os: macos-latest
+            cc: clang
+          - os: windows-latest
+            cc: cl
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=${{ matrix.cc }}
+
+      - name: Build
+        run: cmake --build build --config Debug
+
+      - name: Test
+        run: ctest --test-dir build -C Debug --output-on-failure
+
+  sanitize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=clang -DEULERFOIL_SANITIZE=ON
+
+      - name: Build
+        run: cmake --build build
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
