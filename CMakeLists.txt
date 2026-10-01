@@ -6,6 +6,7 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # --- Compiler options ---
+# Warnings and errors
 option(EULERFOIL_WERROR "Treat warnings as errors" ON)
 
 set(eulerfoil_warnings_gnu
@@ -18,6 +19,22 @@ set(eulerfoil_warnings_gnu
 set(eulerfoil_warnings_msvc
     /W4             # ~ -Wall -Wextra
     /permissive-)   # standards conformance (catches MSVC-isms)
+
+# Sanitizers
+option(EULERFOIL_SANITIZE
+       "Build with AddressSanitizer and UndefinedBehaviorSanitizer"
+       OFF)
+
+if(EULERFOIL_SANITIZE)
+    if(MSVC)
+        message(FATAL_ERROR "EULERFOIL_SANITIZE is not supported with MSVC")
+    endif()
+    add_compile_options(-fsanitize=address,undefined
+                        -fno-sanitize-recover=undefined
+                        -fno-omit-frame-pointer)
+    add_link_options(-fsanitize=address,undefined)
+endif()
+
 
 add_library(eulerfoil_flags INTERFACE)
 
