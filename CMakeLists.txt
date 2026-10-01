@@ -4,6 +4,7 @@ project(eulerfoil C)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_C_EXTENSIONS OFF)
 
 # --- Compiler options ---
 # Warnings and errors
