@@ -3,5 +3,6 @@ set -euo pipefail
 
 find src tests -name '*.c' \
     | xargs clang-tidy -p build \
-        --header-filter='^(?!.*/external/).*' \
+        --header-filter='.*' \
+        --exclude-header-filter='.*/external/.*' \
         "$@"
