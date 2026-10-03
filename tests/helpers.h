@@ -1,7 +1,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-
 /**
  * @brief Generate an array of unbounded pseudo-random f64 (double) numbers.
  *
@@ -23,7 +22,5 @@ void ef_fill_random_f64(double *buf, size_t n, uint32_t seed);
  * @param[in]   lower_bound     Lower bound; inclusive.
  * @param[in]   seed            Pseudo-random number generator seed.
  */
-void ef_fill_random_bounded_f64(double *buf, size_t n,
-                                              double   upper_bound,
-                                              double   lower_bound,
-                                              uint32_t seed);
+void ef_fill_random_bounded_f64(double *buf, size_t n, double upper_bound,
+                                double lower_bound, uint32_t seed);

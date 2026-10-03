@@ -19,7 +19,6 @@
  */
 #define F64_BITS 64U
 
-
 /* --- Implementations --- */
 
 /**
@@ -57,8 +56,7 @@ void ef_fill_random_f64(double *buf, size_t n, uint32_t seed)
     }
 }
 
-void ef_fill_random_bounded_f64(double *buf, size_t n,
-                                double upper_bound,
+void ef_fill_random_bounded_f64(double *buf, size_t n, double upper_bound,
                                 double lower_bound, uint32_t seed)
 {
     srand(seed);

@@ -2,22 +2,23 @@
 #define EULERFOIL_COMPAT_H
 
 #include <assert.h>
-#include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdint.h>
 
 #if !defined(UINTPTR_MAX)
-#   error "uintptr_t not provided, eulerfoil requires an implementation with <stdint.h> uintptr_t"
+#error                                                                         \
+    "uintptr_t not provided, eulerfoil requires an implementation with <stdint.h> uintptr_t"
 #endif
 
 #if defined(_MSC_VER)
-    #define EF_ALIGNAS(n) __declspec(align(n))
+#define EF_ALIGNAS(n) __declspec(align(n))
 #elif defined(__GNUC__) || defined(__clang__)
-    #define EF_ALIGNAS(n) __attribute__((aligned(n)))
+#define EF_ALIGNAS(n) __attribute__((aligned(n)))
 #elif defined(__STDC_VERSION__) && __STDC_VERSION__ >= 2011112L
-    #define EF_ALIGNAS(n) _Alignas(n)
+#define EF_ALIGNAS(n) _Alignas(n)
 #else
-    #error "EF_ALIGNAS requires GCC, Clang, MSVC, or a C11 compiler"
+#error "EF_ALIGNAS requires GCC, Clang, MSVC, or a C11 compiler"
 #endif
 
 /**
