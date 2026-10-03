@@ -1,3 +1,6 @@
+#ifndef EULERFOIL_TESTS_HELPERS_H /* NOLINT(llvm-header-guard */
+#define EULERFOIL_TESTS_HELPERS_H
+
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -24,3 +27,5 @@ void ef_fill_random_f64(double *buf, size_t n, uint32_t seed);
  */
 void ef_fill_random_bounded_f64(double *buf, size_t n, double upper_bound,
                                 double lower_bound, uint32_t seed);
+
+#endif /* EULERFOIL_TESTS_HELPERS_H */
