@@ -112,3 +112,18 @@ static inline EF_SimdF64 ef_simd_neg_f64(EF_SimdF64 x)
     const __m256i sign_bit = _mm256_set1_epi64x(INT64_MIN);
     return _mm256_xor_pd(x, _mm256_castsi256_pd(sign_bit));
 }
+
+static inline bool ef_simd_is_canonical_mask64(EF_SimdMask64 mask)
+{
+    const __m256i is_zero = _mm256_cmpeq_epi64(mask, _mm256_setzero_si256());
+    const __m256i is_ones = _mm256_cmpeq_epi64(mask, _mm256_set1_epi64x(-1));
+    const __m256i ok = _mm256_or_si256(is_zero, is_ones);
+    return _mm256_movemask_pd(_mm256_castsi256_pd(ok)) == 0xF;
+}
+
+static inline bool ef_simd_all_true_mask64(EF_SimdMask64 mask)
+{
+    assert(ef_simd_is_canonical_mask64(mask) &&
+           "mask lanes mush be all-ones or zero");
+    return _mm256_movemask_pd(_mm256_castsi256_pd(mask)) == 0xF;
+}
