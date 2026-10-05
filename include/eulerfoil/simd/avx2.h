@@ -3,9 +3,8 @@
 
 #include "eulerfoil/compat.h"
 
-#include <immintrin.h>
-
 #include <assert.h>
+#include <immintrin.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -49,7 +48,7 @@ static inline void ef_simd_store_mask64(uint64_t *restrict p,
 {
     /* storing to i64 array is not supported in AVX2 */
     void *dst = p;
-    _mm256_storeu_si256((__m256i *)dst, mask);
+    _mm256_storeu_si256((__m256i *) dst, mask);
 }
 
 static inline EF_SimdF64 ef_simd_add_f64(EF_SimdF64 a, EF_SimdF64 b)
@@ -166,7 +165,7 @@ static inline bool ef_simd_is_canonical_mask64(EF_SimdMask64 mask)
 {
     const __m256i is_zero = _mm256_cmpeq_epi64(mask, _mm256_setzero_si256());
     const __m256i is_ones = _mm256_cmpeq_epi64(mask, _mm256_set1_epi64x(-1));
-    const __m256i ok = _mm256_or_si256(is_zero, is_ones);
+    const __m256i ok      = _mm256_or_si256(is_zero, is_ones);
     return _mm256_movemask_pd(_mm256_castsi256_pd(ok)) == 0xF;
 }
 

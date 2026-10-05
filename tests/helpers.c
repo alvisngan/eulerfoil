@@ -1,7 +1,7 @@
+#include <math.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 
 /* --- Definitions --- */
 
@@ -52,7 +52,7 @@ static inline double canonicalize_nan(double d)
 {
     if (isnan(d))
     {
-        d = (double)NAN;
+        d = (double) NAN;
     }
 
     return d;
@@ -66,7 +66,7 @@ void ef_fill_random_f64(double *buf, size_t n, uint32_t seed)
         double   d;
         uint64_t u = rand_bits_64();
         memcpy(&d, &u, sizeof(d));
-        d = canonicalize_nan(d);
+        d      = canonicalize_nan(d);
         buf[i] = d;
     }
 }
@@ -80,8 +80,8 @@ void ef_fill_random_bounded_f64(double *buf, size_t n, double upper_bound,
     {
         /* convert int [0, RAND_MAX] to double [0, 1)               */
         /* + 1.0 on the denominator to force exlusive upper bound   */
-        double d = (double) rand() ;
-        d = canonicalize_nan(d);
+        double d   = (double) rand();
+        d          = canonicalize_nan(d);
         double foo = d / ((double) RAND_MAX + 1.0);
         buf[i]     = lower_bound + range * foo;
     }
