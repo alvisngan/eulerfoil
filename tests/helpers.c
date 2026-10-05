@@ -48,15 +48,14 @@ static inline uint64_t rand_bits_64(void)
 /**
  * @brief Cleaning up signaling NaN to canonical (quiet) NaN.
  */
-static inline double canonicalize_nan(const double d)
+static inline double canonicalize_nan(double d)
 {
-    double x;
     if (isnan(d))
     {
-        x = (double)NAN;
+        d = (double)NAN;
     }
 
-    return x;
+    return d;
 }
 
 void ef_fill_random_f64(double *buf, size_t n, uint32_t seed)
