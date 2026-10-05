@@ -237,7 +237,8 @@ void test_ef_simd_sqrt_f64(void)
     for (unsigned int i = 0; i < N_TEST_ARRAY; ++i)
     {
         EF_ALIGNAS(EF_SIMD_ALIGNMENT) double actual[EF_SIMD_WIDTH];
-        EF_SimdF64 vec = ef_simd_sqrt_f64(test_array_a_f64[i]);
+        EF_SimdF64 foo = ef_simd_load_f64(&test_array_a_f64[i]);
+        EF_SimdF64 vec = ef_simd_sqrt_f64(foo);
         ef_simd_store_aligned_f64(actual, vec);
         for (unsigned int j = 0; j < EF_SIMD_WIDTH; ++j)
         {
@@ -254,7 +255,8 @@ void test_ef_simd_abs_f64(void)
     for (unsigned int i = 0; i < N_TEST_ARRAY; ++i)
     {
         EF_ALIGNAS(EF_SIMD_ALIGNMENT) double actual[EF_SIMD_WIDTH];
-        EF_SimdF64 vec = ef_simd_abs_f64(test_array_a_f64[i]);
+        EF_SimdF64 foo = ef_simd_load_f64(&test_array_a_f64[i]);
+        EF_SimdF64 vec = ef_simd_abs_f64(foo);
         ef_simd_store_aligned_f64(actual, vec);
         for (unsigned int j = 0; j < EF_SIMD_WIDTH; ++j)
         {
@@ -311,7 +313,8 @@ void test_ef_simd_neg_f64(void)
     for (unsigned int i = 0; i < N_TEST_ARRAY; ++i)
     {
         EF_ALIGNAS(EF_SIMD_ALIGNMENT) double actual[EF_SIMD_WIDTH];
-        EF_SimdF64 vec = ef_simd_neg_f64(test_array_a_f64[i]);
+        EF_SimdF64 foo = ef_simd_load_f64(&test_array_a_f64[i]);
+        EF_SimdF64 vec = ef_simd_neg_f64(foo);
         ef_simd_store_aligned_f64(actual, vec);
         for (unsigned int j = 0; j < EF_SIMD_WIDTH; ++j)
         {
