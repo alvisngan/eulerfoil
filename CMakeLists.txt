@@ -36,6 +36,16 @@ if(EULERFOIL_SANITIZE)
     add_link_options(-fsanitize=address,undefined)
 endif()
 
+# SIMD ISA
+set(EF_SIMD "scalar" CACHE STRING "SIMD backend: scalar or avx2") # default
+
+if(EF_SIMD STREQUAL "avx2")
+    if(MSVC)
+        add_compile_options(/arch:AVX2)
+    else()
+        add_compile_options(-mavx2 -mfma)
+    endif()
+endif()
 
 add_library(eulerfoil_flags INTERFACE)
 
