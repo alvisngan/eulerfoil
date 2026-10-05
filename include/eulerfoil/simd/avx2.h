@@ -106,6 +106,30 @@ static inline EF_SimdF64 ef_simd_abs_f64(EF_SimdF64 x)
     return _mm256_and_pd(x, _mm256_castsi256_pd(sign_cleared));
 }
 
+static inline EF_SimdF64 ef_simd_max_f64(EF_SimdF64 a, EF_SimdF64 b)
+{
+    /* AVX max/min returns b when there is a NaN, violating IEEE specs */
+    const __m256d foo = _mm256_max_pd(a, b);
+
+    /* (b_i == NaN) ? all-ones : 0 */
+    const __m256d b_nan_mask = _mm256_cmp_pd(b, b, _CMP_UNORD_Q);
+
+    /* choose a_i if b_i is NaN, matching the IEEE specs */
+    return _mm256_blendv_pd(foo, a, b_nan_mask);
+}
+
+static inline EF_SimdF64 ef_simd_min_f64(EF_SimdF64 a, EF_SimdF64 b)
+{
+    /* AVX max/min returns b when there is a NaN, violating IEEE specs */
+    const __m256d foo = _mm256_min_pd(a, b);
+
+    /* (b_i == NaN) ? all-ones : 0 */
+    const __m256d b_nan_mask = _mm256_cmp_pd(b, b, _CMP_UNORD_Q);
+
+    /* choose a_i if b_i is NaN, matching the IEEE specs */
+    return _mm256_blendv_pd(foo, a, b_nan_mask);
+}
+
 static inline EF_SimdF64 ef_simd_neg_f64(EF_SimdF64 x)
 {
     /* set the sign bit; (two's complement) */
