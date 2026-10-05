@@ -1,3 +1,5 @@
+#ifndef EULERFOIL_SIMD_AVX2_H
+#define EULERFOIL_SIMD_AVX2_H
 
 #include "eulerfoil/compat.h"
 
@@ -174,3 +176,5 @@ static inline bool ef_simd_all_true_mask64(EF_SimdMask64 mask)
            "mask lanes mush be all-ones or zero");
     return _mm256_movemask_pd(_mm256_castsi256_pd(mask)) == 0xF;
 }
+
+#endif
