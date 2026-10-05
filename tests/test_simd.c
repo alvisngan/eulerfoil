@@ -35,6 +35,29 @@ static EF_ALIGNAS(EF_SIMD_ALIGNMENT) double test_array_c_f64[N_TEST_ARRAY];
 
 /* NOLINTEND(cppcoreguidelines-avoid-non-const-global-variables) */
 
+/* floating point assert special cases for min/max */
+/**
+ * @brief Bitwise equal, expect for NaNs and signed zeros.
+ *
+ *  Used for min/max operations, where <math.h> fmax and fmin left those
+ *  special cases unspecified.
+ */
+static void ef_assert_equal_loose(const double expected, const double actual)
+{
+    if (isnan(expected))
+    {
+        TEST_ASSERT_TRUE(isnan(actual));
+    }
+    else if (fpclassify(expected) == FP_ZERO)
+    {
+        TEST_ASSERT_EQUAL_INT(FP_ZERO, fpclassify(actual));
+    }
+    else
+    {
+        TEST_ASSERT_EQUAL_MEMORY(&expected, &actual, sizeof(double));
+    }
+}
+
 /* NOLINTNEXTLINE(readability-identifier-naming) */
 void setUp(void)
 {
@@ -283,7 +306,7 @@ void test_ef_simd_max_f64(void)
             /* correctly-rounded op -> should be bit-identical to math.h */
             double expected =
                 fmax(test_array_a_f64[i + j], test_array_b_f64[i + j]);
-            TEST_ASSERT_EQUAL_MEMORY(&expected, &actual[j], sizeof(double));
+            ef_assert_equal_loose(expected, actual[j]);
         }
     }
 }
@@ -303,7 +326,7 @@ void test_ef_simd_min_f64(void)
             /* correctly-rounded op -> should be bit-identical to math.h */
             double expected =
                 fmin(test_array_a_f64[i + j], test_array_b_f64[i + j]);
-            TEST_ASSERT_EQUAL_MEMORY(&expected, &actual[j], sizeof(double));
+            ef_assert_equal_loose(expected, actual[j]);
         }
     }
 }
