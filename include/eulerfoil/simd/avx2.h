@@ -113,6 +113,29 @@ static inline EF_SimdF64 ef_simd_neg_f64(EF_SimdF64 x)
     return _mm256_xor_pd(x, _mm256_castsi256_pd(sign_bit));
 }
 
+static inline EF_SimdMask64 ef_simd_compare_greater_f64(EF_SimdF64 a,
+                                                        EF_SimdF64 b)
+{
+    return _mm256_castpd_si256(_mm256_cmp_pd(a, b, _CMP_GT_OS));
+}
+
+static inline EF_SimdMask64 ef_simd_compare_less_f64(EF_SimdF64 a, EF_SimdF64 b)
+{
+    return _mm256_castpd_si256(_mm256_cmp_pd(a, b, _CMP_LT_OS));
+}
+
+static inline EF_SimdMask64 ef_simd_compare_greater_equal_f64(EF_SimdF64 a,
+                                                              EF_SimdF64 b)
+{
+    return _mm256_castpd_si256(_mm256_cmp_pd(a, b, _CMP_GE_OS));
+}
+
+static inline EF_SimdMask64 ef_simd_compare_less_equal_f64(EF_SimdF64 a,
+                                                           EF_SimdF64 b)
+{
+    return _mm256_castpd_si256(_mm256_cmp_pd(a, b, _CMP_LE_OS));
+}
+
 static inline bool ef_simd_is_canonical_mask64(EF_SimdMask64 mask)
 {
     const __m256i is_zero = _mm256_cmpeq_epi64(mask, _mm256_setzero_si256());
