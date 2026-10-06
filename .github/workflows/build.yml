@@ -1,0 +1,33 @@
+name: Build
+
+on:
+  workflow_call:
+    inputs:
+      os:
+        required: true
+        type: string
+      cc:
+        required: true
+        type: string
+      simd:
+        required: true
+        type: string
+      cmake_args:
+        required: false
+        type: string
+        default: ''
+
+jobs:
+  build:
+    runs-on: ${{ inputs.os }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER={{ inputs.cc }} -DEF_SIMD=${{ inputs.simd }} ${{ inputs.cmake_args }}
+
+      - name: Build
+        run: cmake --build build --config Debug
+
+      - name: Test
+        run: ctest --test-dir build -C Debug --output-on-failure

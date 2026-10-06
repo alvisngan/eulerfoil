@@ -7,46 +7,53 @@ on:
   pull_request:
 
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
+  build-x86-ubuntu:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - os: ubuntu-latest
-            cc: gcc
-          - os: ubuntu-latest
-            cc: clang
-          - os: macos-latest
-            cc: clang
-          - os: windows-latest
-            cc: cl
+        cc: [gcc, clang]
+        simd: &x86_simd [scalar, avx2]
+    uses: ./.github/workflows/build.yml
+    with:
+      os: ubuntu-latest
+      cc: ${{ matrix.cc }}
+      simd: ${{ matrix.simd }}
 
-    steps:
-      - uses: actions/checkout@v7
+  build-x86-windows:
+    strategy:
+      fail-fast: false
+      matrix:
+        cc: [cl]
+        simd: *x86_simd
+    uses: ./.github/workflows/build.yml
+    with:
+      os: windows-latest
+      cc: ${{ matrix.cc }}
+      simd: ${{ matrix.simd }}
 
-      - name: Configure
-        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=${{ matrix.cc }}
-
-      - name: Build
-        run: cmake --build build --config Debug
-
-      - name: Test
-        run: ctest --test-dir build -C Debug --output-on-failure
+  build-arm64-macos:
+    strategy:
+      fail-fast: false
+      matrix:
+        cc: [clang]
+        simd: [scalar]
+    uses: ./.github/workflows/build.yml
+    with:
+      os: macos-latest
+      cc: ${{ matrix.cc }}
+      simd: ${{ matrix.simd }}
 
   sanitize:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-
-      - name: Configure
-        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=clang -DEULERFOIL_SANITIZE=ON
-
-      - name: Build
-        run: cmake --build build
-
-      - name: Test
-        run: ctest --test-dir build --output-on-failure
+    strategy:
+      fail-fast: false
+      matrix:
+        simd: *x86_simd
+    uses: ./.github/workflows/build.yml
+    with:
+      os: ubuntu-latest
+      cc: clang
+      simd: ${{ matrix.simd }}
+      cmake_args: -DEULERFOIL_SANITIZE=ON
 
   format:
     runs-on: ubuntu-latest
@@ -68,6 +75,10 @@ jobs:
 
   tidy:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        simd: *x86_simd
     steps:
       - uses: actions/checkout@v7
 
@@ -81,7 +92,7 @@ jobs:
           clang-tidy --version
 
       - name: Configure
-        run: cmake -S . -B build -DCMAKE_C_COMPILER=clang-19
+        run: cmake -S . -B build -DCMAKE_C_COMPILER=clang-19 -DEF_SIMD=${{ matrix.simd }}
 
       - name: Run clang-tidy
         run: bash tidy.sh --warnings-as-errors='*'
