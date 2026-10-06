@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v7
 
       - name: Configure
-        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER={{ inputs.cc }} -DEF_SIMD=${{ inputs.simd }} ${{ inputs.cmake_args }}
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=${{ inputs.cc }} -DEF_SIMD=${{ inputs.simd }} ${{ inputs.cmake_args }}
 
       - name: Build
         run: cmake --build build --config Debug
