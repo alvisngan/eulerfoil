@@ -17,6 +17,8 @@
  * \f]
  *
  * \f[ \overrightarrow{f}_{\rho} = m_1 \f]
+ *
+ * @pre \f$m_1 \in (-\infty, \infty)\f$
  */
 static inline EF_SimdF64 ef_flux_x_rho(const EF_SimdF64 m1);
 
@@ -37,7 +39,8 @@ static inline EF_SimdF64 ef_flux_x_rho(const EF_SimdF64 m1);
  *
  * \f[ \overrightarrow{f}_{m_1} = \frac{m_1^2}{\rho} + p \f]
  *
- * @pre \f$\rho > 0\f$
+ * @pre \f$\rho \in (0, \infty)\f$, \f$m_1 \in (-\infty, \infty)\f$,
+ *      \f$p \in (0, \infty)\f$
  */
 static inline EF_SimdF64 ef_flux_x_m1(const EF_SimdF64 rho, const EF_SimdF64 m1,
                                       const EF_SimdF64 p);
@@ -59,7 +62,8 @@ static inline EF_SimdF64 ef_flux_x_m1(const EF_SimdF64 rho, const EF_SimdF64 m1,
  *
  * \f[ \overrightarrow{f}_{m_2} = \frac{m_1 m_2}{\rho} \f]
  *
- * @pre \f$\rho > 0\f$
+ * @pre \f$\rho \in (0, \infty)\f$, \f$m_1 \in (-\infty, \infty)\f$,
+ *      \f$m_2 \in (-\infty, \infty)\f$
  */
 static inline EF_SimdF64 ef_flux_x_m2(const EF_SimdF64 rho, const EF_SimdF64 m1,
                                       const EF_SimdF64 m2);
@@ -81,7 +85,8 @@ static inline EF_SimdF64 ef_flux_x_m2(const EF_SimdF64 rho, const EF_SimdF64 m1,
  *
  * \f[ \overrightarrow{f}_{e} = \frac{m_1 (e + p)}{\rho} \f]
  *
- * @pre \f$\rho > 0\f$
+ * @pre \f$\rho \in (0, \infty)\f$, \f$m_1 \in (-\infty, \infty)\f$,
+ *      \f$e \in (0, \infty)\f$, \f$p \in (0, \infty)\f$
  */
 static inline EF_SimdF64 ef_flux_x_e(const EF_SimdF64 rho, const EF_SimdF64 m1,
                                      const EF_SimdF64 e, cosnt EF_SimdF64 p);
@@ -103,6 +108,8 @@ static inline EF_SimdF64 ef_flux_x_e(const EF_SimdF64 rho, const EF_SimdF64 m1,
  * \f]
  *
  * \f[ \overrightarrow{g}_{\rho} = m_2 \f]
+ *
+ * @pre \f$m_2 \in (-\infty, \infty)\f$
  */
 static inline EF_SimdF64 ef_flux_y_rho(const EF_SimdF64 m2);
 
@@ -124,7 +131,8 @@ static inline EF_SimdF64 ef_flux_y_rho(const EF_SimdF64 m2);
  *
  * \f[ \overrightarrow{g}_{\m_1} = \frac{m_1 m_2}{\rho} \f]
  *
- * @pre \f$\rho > 0\f$
+ * @pre \f$\rho \in (0, \infty)\f$, \f$m_1 \in (-\infty, \infty)\f$,
+ *      \f$m_2 \in (-\infty, \infty)\f$
  */
 static inline EF_SimdF64 ef_flux_y_m1(const EF_SimdF64 rho, const EF_SimdF64 m1,
                                       const EF_SimdF64 m2);
@@ -147,7 +155,8 @@ static inline EF_SimdF64 ef_flux_y_m1(const EF_SimdF64 rho, const EF_SimdF64 m1,
  *
  * \f[ \overrightarrow{g}_{\m_2} = \frac{m_2^2}{\rho} + p \f]
  *
- * @pre \f$\rho > 0\f$
+ * @pre \f$\rho \in (0, \infty)\f$, \f$m_2 \in (-\infty, \infty)\f$,
+ *      \f$p \in (0, \infty)\f$
  */
 static inline EF_SimdF64 ef_flux_y_m2(const EF_SimdF64 rho, const EF_SimdF64 m2,
                                       const EF_SimdF64 p);
@@ -170,7 +179,8 @@ static inline EF_SimdF64 ef_flux_y_m2(const EF_SimdF64 rho, const EF_SimdF64 m2,
  *
  * \f[ \overrightarrow{g}_{e} = \frac{m_2 (e + p)}{\rho} \f]
  *
- * @pre \f$\rho > 0\f$
+ * @pre \f$\rho \in (0, \infty)\f$, \f$m_2 \in (-\infty, \infty)\f$,
+ *      \f$e \in (0, \infty)\f$, \f$p \in (0, \infty)\f$
  */
 static inline EF_SimdF64 ef_flux_y_e(const EF_SimdF64 rho, const EF_SimdF64 m2,
                                      const EF_SimdF64 e, const EF_SimdF64 p);
@@ -179,14 +189,17 @@ static inline EF_SimdF64 ef_flux_y_e(const EF_SimdF64 rho, const EF_SimdF64 m2,
 
 static inline EF_SimdF64 ef_flux_x_rho(const EF_SimdF64 m1)
 {
+    assert(ef_simd_all_finite_f64(m1));
+
     return EF_SimdF64 m1;
 }
 
 static inline EF_SimdF64 ef_flux_x_m1(const EF_SimdF64 rho, const EF_SimdF64 m1,
                                       const EF_SimdF64 p)
 {
-    assert(ef_simd_all_true_mask64(
-        ef_simd_compare_greater_f64(rho, ef_simd_set1_f64(0.0))));
+    assert(ef_simd_all_positive_finite_f64(rho));
+    assert(ef_simd_all_finite_f64(m1));
+    assert(ef_simd_all_positive_finite_f64(p));
 
     return ef_simd_add_f64(ef_simd_div_f64(ef_simd_mul_f64(m1, m1), rho), p);
 }
@@ -194,8 +207,9 @@ static inline EF_SimdF64 ef_flux_x_m1(const EF_SimdF64 rho, const EF_SimdF64 m1,
 static inline EF_SimdF64 ef_flux_x_m2(const EF_SimdF64 rho, const EF_SimdF64 m1,
                                       const EF_SimdF64 m2)
 {
-    assert(ef_simd_all_true_mask64(
-        ef_simd_compare_greater_f64(rho, ef_simd_set1_f64(0.0))));
+    assert(ef_simd_all_positive_finite_f64(rho));
+    assert(ef_simd_all_finite_f64(m1));
+    assert(ef_simd_all_finite_f64(m2));
 
     return ef_simd_div_f64(ef_simd_mul_f64(m1, m2), rho);
 }
@@ -203,22 +217,27 @@ static inline EF_SimdF64 ef_flux_x_m2(const EF_SimdF64 rho, const EF_SimdF64 m1,
 static inline EF_SimdF64 ef_flux_x_e(const EF_SimdF64 rho, const EF_SimdF64 m1,
                                      cosnt EF_SimdF64 e, const EF_SimdF64 p)
 {
-    assert(ef_simd_all_true_mask64(
-        ef_simd_compare_greater_f64(rho, ef_simd_set1_f64(0.0))));
+    assert(ef_simd_all_positive_finite_f64(rho));
+    assert(ef_simd_all_finite_f64(m1));
+    assert(ef_simd_all_positive_finite_f64(e));
+    assert(ef_simd_all_positive_finite_f64(p));
 
     return ef_simd_div_f64(ef_simd_mul_f64(m1, ef_simd_add_f64(e, p)), rho);
 }
 
 static inline EF_SimdF64 ef_flux_y_rho(const EF_SimdF64 m2)
 {
-    return EF_SimdF64 m1;
+    assert(ef_simd_all_finite_f64(m2));
+
+    return EF_SimdF64 m2;
 }
 
 static inline EF_SimdF64 ef_flux_y_m1(const EF_SimdF64 rho, const EF_SimdF64 m1,
                                       const EF_SimdF64 m2)
 {
-    assert(ef_simd_all_true_mask64(
-        ef_simd_compare_greater_f64(rho, ef_simd_set1_f64(0.0))));
+    assert(ef_simd_all_positive_finite_f64(rho));
+    assert(ef_simd_all_finite_f64(m1));
+    assert(ef_simd_all_finite_f64(m2));
 
     return ef_simd_div_f64(ef_simd_mul_f64(m1, m2), rho);
 }
@@ -226,8 +245,9 @@ static inline EF_SimdF64 ef_flux_y_m1(const EF_SimdF64 rho, const EF_SimdF64 m1,
 static inline EF_SimdF64 ef_flux_y_m2(const EF_SimdF64 rho, const EF_SimdF64 m2,
                                       const EF_SimdF64 p)
 {
-    assert(ef_simd_all_true_mask64(
-        ef_simd_compare_greater_f64(rho, ef_simd_set1_f64(0.0))));
+    assert(ef_simd_all_positive_finite_f64(rho));
+    assert(ef_simd_all_finite_f64(m2));
+    assert(ef_simd_all_positive_finite_f64(p));
 
     return ef_simd_add_f64(ef_simd_div_f64(ef_simd_mul_f64(m2, m2), rho), p);
 }
@@ -235,8 +255,10 @@ static inline EF_SimdF64 ef_flux_y_m2(const EF_SimdF64 rho, const EF_SimdF64 m2,
 static inline EF_SimdF64 ef_flux_y_e(const EF_SimdF64 rho, const EF_SimdF64 m2,
                                      cosnt EF_SimdF64 e, const EF_SimdF64 p)
 {
-    assert(ef_simd_all_true_mask64(
-        ef_simd_compare_greater_f64(rho, ef_simd_set1_f64(0.0))));
+    assert(ef_simd_all_positive_finite_f64(rho));
+    assert(ef_simd_all_finite_f64(m2));
+    assert(ef_simd_all_positive_finite_f64(e));
+    assert(ef_simd_all_positive_finite_f64(p));
 
     return ef_simd_div_f64(ef_simd_mul_f64(m2, ef_simd_add_f64(e, p)), rho);
 }
