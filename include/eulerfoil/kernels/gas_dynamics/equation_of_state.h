@@ -10,7 +10,7 @@
  *      \f$ e > \frac{m_1^2 + m_2^2}{2 \rho}\f$
  */
 static inline EF_SimdF64 ef_pressure(const double gamma, const EF_SimdF64 rho,
-                                     const EF_SimdF64 m_1, const EF_SimdF64 m_2,
+                                     const EF_SimdF64 m1, const EF_SimdF64 m2,
                                      const EF_SimdF64 e);
 
 /**
@@ -26,7 +26,7 @@ static inline EF_SimdF64 ef_sound(const double gamma, const EF_SimdF64 rho,
 /* --- Definitions --- */
 
 static inline EF_SimdF64 ef_pressure(const double gamma, const EF_SimdF64 rho,
-                                     const EF_SimdF64 m_1, const EF_SimdF64 m_2,
+                                     const EF_SimdF64 m1, const EF_SimdF64 m2,
                                      const EF_SimdF64 e)
 {
     assert(gamma > 1.0);
@@ -35,7 +35,7 @@ static inline EF_SimdF64 ef_pressure(const double gamma, const EF_SimdF64 rho,
 
     /* (m_1^2 + m_2^2)/(2 rho) */
     const EF_SimdF64 kinectic = ef_simd_div_f64(
-        ef_simd_add_f64(ef_simd_mul_f64(m_1, m_1), ef_simd_mul_f64(m_2, m_2)),
+        ef_simd_add_f64(ef_simd_mul_f64(m1, m1), ef_simd_mul_f64(m2, m2)),
         ef_simd_mul_f64(ef_simd_set1_f64(2.0), rho));
 
     assert(ef_simd_all_true_mask64(ef_simd_compare_greater_f64(e, kinectic)));
