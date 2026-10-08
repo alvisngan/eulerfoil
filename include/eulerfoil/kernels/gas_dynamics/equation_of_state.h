@@ -1,3 +1,6 @@
+#ifndef EULERFOIL_KERNELS_GAS_DYNAMICS_EQUATION_OF_STATE_H
+#define EULERFOIL_KERNELS_GAS_DYNAMICS_EQUATION_OF_STATE_H
+
 #include "eulerfoil/simd.h"
 
 #include <math.h>
@@ -60,3 +63,5 @@ static inline EF_SimdF64 ef_sound(const double gamma, const EF_SimdF64 rho,
     return ef_simd_sqrt_f64(
         ef_simd_div_f64(ef_simd_mul_f64(ef_simd_set1_f64(gamma), p), rho));
 }
+
+#endif
