@@ -57,5 +57,6 @@ static inline EF_SimdF64 ef_sound(const double gamma, const EF_SimdF64 rho,
     assert(ef_simd_all_positive_finite_f64(rho));
     assert(ef_simd_all_positive_finite_f64(p));
 
-    return ef_simd_sqrt_f64(ef_simd_mul_f64(ef_simd_set1_f64(gamma), p), rho);
+    return ef_simd_sqrt_f64(
+        ef_simd_div_f64(ef_simd_mul_f64(ef_simd_set1_f64(gamma), p), rho));
 }
