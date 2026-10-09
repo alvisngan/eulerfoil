@@ -61,9 +61,13 @@ static void ef_assert_equal_loose(const double expected, const double actual)
 /* NOLINTNEXTLINE(readability-identifier-naming) */
 void setUp(void)
 {
-    ef_fill_random_f64(test_array_a_f64, N_TEST_ARRAY, RAND_SEED);
-    ef_fill_random_f64(test_array_b_f64, N_TEST_ARRAY, RAND_SEED);
-    ef_fill_random_f64(test_array_c_f64, N_TEST_ARRAY, RAND_SEED);
+    ef_random_generator_seed(42U);
+    ef_fill_random_f64(test_array_a_f64, N_TEST_ARRAY, ef_random_generator,
+                       NULL);
+    ef_fill_random_f64(test_array_b_f64, N_TEST_ARRAY, ef_random_generator,
+                       NULL);
+    ef_fill_random_f64(test_array_c_f64, N_TEST_ARRAY, ef_random_generator,
+                       NULL);
 }
 
 /* NOLINTNEXTLINE(readability-identifier-naming) */
