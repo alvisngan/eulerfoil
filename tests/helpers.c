@@ -48,10 +48,7 @@ static inline uint64_t rand_bits_64(void)
     return bits;
 }
 
-/**
- * @brief Cleaning up signaling NaN to canonical (quiet) NaN.
- */
-static inline double canonicalize_nan(double d)
+double ef_canonicalize_nan(double d)
 {
     if (isnan(d))
     {
@@ -81,7 +78,7 @@ void ef_fill_random_f64(double *buf, size_t n,
         double   d;
         uint64_t u = rand_bits_64();
         memcpy(&d, &u, sizeof(d));
-        d      = canonicalize_nan(d);
+        d      = ef_canonicalize_nan(d);
         buf[i] = d;
     }
 }

@@ -5,6 +5,16 @@
 #include <stdlib.h>
 
 /**
+ * @brief Cleaning up signaling NaN to canonical (quiet) NaN.
+ *
+ * @param[in] d Any double that could contain signaling or quiet NaN.
+ *
+ * @return If @p d is signaling NaN, it returns a canonical (quiet NaN);
+ *         otherwise, the function returns d.
+ */
+double ef_canonicalize_nan(double d);
+
+/**
  * @brief Seed ef_random_generator().
  *
  * @param[in] seed Starting point of the sequence.
