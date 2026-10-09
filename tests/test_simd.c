@@ -229,10 +229,15 @@ void test_ef_simd_neg_mul_add_f64(void)
         for (unsigned int j = 0; j < EF_SIMD_WIDTH; ++j)
         {
             /* correctly-rounded op -> should be bit-identical to math.h */
-            double expected =
-                fma(-test_array_a_f64[i + j], test_array_b_f64[i + j],
-                    test_array_c_f64[i + j]);
-            TEST_ASSERT_EQUAL_MEMORY(&expected, &actual[j], sizeof(double));
+            /* IEEE specs did not specify the sign of NaN                */
+            double expected = ef_canonicalize_nan(fma(-test_array_a_f64[i + j],
+                                                      test_array_b_f64[i + j],
+                                                      test_array_c_f64[i + j]));
+
+            double actual_cleaned = ef_canonicalize_nan(actual[j]);
+
+            TEST_ASSERT_EQUAL_MEMORY(&expected, &actual_cleaned,
+                                     sizeof(double));
         }
     }
 }
@@ -251,10 +256,14 @@ void test_ef_simd_mul_sub_f64(void)
         for (unsigned int j = 0; j < EF_SIMD_WIDTH; ++j)
         {
             /* correctly-rounded op -> should be bit-identical to math.h */
-            double expected =
+            /* IEEE specs did not specify the sign of NaN                */
+            double expected = ef_canonicalize_nan(
                 fma(test_array_a_f64[i + j], test_array_b_f64[i + j],
-                    -test_array_c_f64[i + j]);
-            TEST_ASSERT_EQUAL_MEMORY(&expected, &actual[j], sizeof(double));
+                    -test_array_c_f64[i + j]));
+
+            double actual_cleaned = ef_canonicalize_nan(actual[j]);
+            TEST_ASSERT_EQUAL_MEMORY(&expected, &actual_cleaned,
+                                     sizeof(double));
         }
     }
 }
